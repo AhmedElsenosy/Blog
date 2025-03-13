@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
+from django.urls import reverse
 
 
 # Create your models here.
@@ -15,3 +16,17 @@ class Blog (models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse("detail_blog", kwargs={"pk": self.pk})
+    
+
+class Comment (models.Model):
+    comment = models.CharField( max_length=2000)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL , null = True)
+    active = models.BooleanField(default=False)
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE , related_name='comment')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__ (self):
+        return self.user.username
