@@ -39,7 +39,12 @@
                             {{comment.comment}}
                         </p>
                         <div class="d-flex justify-content-between">
-                            <a href="#" class="tm-color-primary">REPLY</a>
+                            <form action="{% url 'delete_comment' %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="delete" id="delete" value="{{comment.id}}">
+                                <input type="hidden" name="id" id="id" value="{{blog.id}}">
+                                <button type="submit" class="tm-color-primary"><i class="fas fa-trash-alt" style="font-size: x-large; color: red;"></i></button>
+                            </form>
                             <span class="tm-color-primary">&nbsp;{{comment.created_at|timesince}}</span>
                         </div>                                                 
                     </div>                                
@@ -71,24 +76,14 @@
             </ul>
             <hr class="mb-3 tm-hr-primary">
             <h2 class="tm-mb-40 tm-post-title tm-color-primary">Related Posts</h2>
-            <a href="#" class="d-block tm-mb-40">
-                <figure>
-                    <img src="img/img-02.jpg" alt="Image" class="mb-3 img-fluid">
-                    <figcaption class="tm-color-primary">Duis mollis diam nec ex viverra scelerisque a sit</figcaption>
-                </figure>
-            </a>
-            <a href="#" class="d-block tm-mb-40">
-                <figure>
-                    <img src="img/img-05.jpg" alt="Image" class="mb-3 img-fluid">
-                    <figcaption class="tm-color-primary">Integer quis lectus eget justo ullamcorper ullamcorper</figcaption>
-                </figure>
-            </a>
-            <a href="#" class="d-block tm-mb-40">
-                <figure>
-                    <img src="img/img-06.jpg" alt="Image" class="mb-3 img-fluid">
-                    <figcaption class="tm-color-primary">Nam lobortis nunc sed faucibus commodo</figcaption>
-                </figure>
-            </a>
+            {% for post in blog.get_related_posts %}
+                <a href="{{post.get_absolute_url}}" class="d-block tm-mb-40">
+                    <figure>
+                        <img src="{{post.img.url}}" alt="Image" class="mb-3 img-fluid">
+                        <figcaption class="tm-color-primary">{{post.title|title}}</figcaption>
+                    </figure>
+                </a>
+            {% endfor %}
         </div>                    
     </aside>
 </div>

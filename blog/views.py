@@ -41,3 +41,11 @@ def comment (request):
         new_comment.save()
 
         return redirect ('detail_blog' ,pk)
+    
+def delete_comment (request):
+    if request.POST:
+        pk = request.POST.get('delete')
+        blog_id = request.POST.get('id')
+        comment = Comment.objects.get(id = pk)
+        comment.delete()
+        return redirect('detail_blog',blog_id)

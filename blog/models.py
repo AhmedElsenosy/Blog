@@ -14,6 +14,9 @@ class Blog (models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     tags = TaggableManager()
 
+    def get_related_posts (self):
+        return Blog.objects.filter(tags__in = self.tags.all()).distinct()
+
     def __str__(self):
         return self.title
 
