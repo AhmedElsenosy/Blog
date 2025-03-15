@@ -24,3 +24,28 @@ def register (request):
             return redirect('home')
             
     return render(request , 'register.html' , {'form' : form})
+
+
+def login_page (request):
+    if request.user.is_authenticated:
+        messages.warning(request , f'You are already logged in, welcome {request.user}')
+        return redirect('home')
+    if request.POST:
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+
+            user = authenticate(request , username = username , password = password)
+
+            if user:
+                login(request , user)
+                messages.info(request , f'Login successfully! Welcome to our website {username}')
+                return redirect ('home')
+            
+    else:
+        form = LoginForm()
+
+    return render (request , 'login.html' , {'form' : form})
+    
+
