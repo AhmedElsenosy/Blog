@@ -1,6 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm , PasswordChangeForm
 from django import forms
 from django.contrib.auth.models import User
+from .models import *
 
 class RegisterForm (UserCreationForm):
     class Meta:
@@ -40,3 +41,14 @@ class ChangePassForm(PasswordChangeForm):
                      'dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 '
                      'dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
         })
+
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        exclude = ('user',)
+
+    def __init__(self, *args, **kwargs):
+        super(ProfileForm , self).__init__(*args, **kwargs)
+        for field_name , field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'

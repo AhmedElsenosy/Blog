@@ -70,3 +70,19 @@ def change_password (request):
     else:
         form = ChangePassForm(request.user)
     return render(request , 'change_password.html' , {'form' : form})
+
+def create_profile(request , pk):
+    profile = Profile.objects.get(id = pk)
+    if request.POST:
+        form = ProfileForm(request.POST , request.FILES , instance = profile)
+        if form.errors:
+            messages.error(request , f'{form.errors}')
+        if form.is_valid():
+            new = form.save(commit=False)
+            new.user = request.user
+            new.save()
+            messages.success(request , "Profile Updated successfully.")
+            return redirect('profile' , profile.id)
+    else:
+        form = ProfileForm(instance = profile)
+    return render(request , 'profile.html' , {'form' : form , 'profile' : profile})
