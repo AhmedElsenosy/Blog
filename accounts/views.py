@@ -56,3 +56,17 @@ def logout_page (request):
     logout(request)
     messages.warning(request , "You are logged out.")
     return redirect('login')
+
+def change_password (request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    if request.POST:
+        form = ChangePassForm(request.user , request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request ,user)
+            messages.success(request , "Password changed successfully.")
+            return redirect('home')
+    else:
+        form = ChangePassForm(request.user)
+    return render(request , 'change_password.html' , {'form' : form})
