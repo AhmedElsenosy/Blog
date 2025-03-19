@@ -71,3 +71,9 @@ def edit_blog (request , pk):
         form = Edit_blog(instance = blog)
         
     return render(request , 'edit_post.html' , {'form':form , 'blog':blog})
+
+
+def delete_blog (request , pk):
+    blog = Blog.objects.get(id = pk).delete()
+    messages.success(request , 'Deleted Successfully...')
+    return redirect('home')
