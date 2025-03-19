@@ -77,3 +77,22 @@ def delete_blog (request , pk):
     blog = Blog.objects.get(id = pk).delete()
     messages.success(request , 'Deleted Successfully...')
     return redirect('home')
+
+@login_required
+def Create_post (request):
+    if request.POST:
+        form = Create_blog(request.POST , request.FILES)
+        if form.errors:
+            messages.warning(request , f'{form.errors}')
+
+        if form.is_valid():
+            new = form.save(commit=False)
+            new.author = request.user
+            new.save()
+            messages.success(request , 'Created Successfully...')
+            return redirect('home')
+        
+    else:
+        form = Create_blog()
+
+    return render(request , 'create_post.html' , {'form':form})

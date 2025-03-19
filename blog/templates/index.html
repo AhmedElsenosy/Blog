@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+
+    <div style="display: flex; justify-content: center; align-items: center; margin: 7px;">
+        <a href="{% url 'create_post' %}"><button class="btn btn-primary">Add New Post</button></a>
+    </div>
+
     <div class="row tm-row">
 
         {% for blog in all_blogs %}

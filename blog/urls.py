@@ -9,4 +9,5 @@ urlpatterns = [
     path('delete_comment', delete_comment , name='delete_comment'),
     path('edit_blog/<int:pk>', edit_blog , name='edit_blog'),
     path('delete_blog/<int:pk>', delete_blog , name='delete_blog'),
+    path('create_post', Create_post , name='create_post'),
 ]
