@@ -2,6 +2,8 @@ from django.shortcuts import render , get_object_or_404 , redirect
 from .models import *
 from taggit.models import Tag
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .forms import *
 
 # Create your views here.
 
@@ -50,3 +52,22 @@ def delete_comment (request):
         comment = Comment.objects.get(id = pk)
         comment.delete()
         return redirect('detail_blog',blog_id)
+    
+
+def edit_blog (request , pk):
+    blog = Blog.objects.get(id = pk)
+    if request.POST:
+        form = Edit_blog(request.POST , request.FILES , instance = blog)
+
+        if form.errors:
+            messages.warning(request , f'{form.errors}')
+
+        if form.is_valid():
+            form.save()
+            messages.success(request,'Updated Successfully...')
+            return redirect('detail_blog' , pk)
+        
+    else:
+        form = Edit_blog(instance = blog)
+        
+    return render(request , 'edit_post.html' , {'form':form , 'blog':blog})

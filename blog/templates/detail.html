@@ -3,6 +3,11 @@
 <div class="row tm-row">
     <div class="col-12">
         <hr class="tm-hr-primary tm-mb-55">
+        {% if request.user == blog.author %}
+        <div style="display: flex; justify-content: center; align-items: center; margin: 5px;">
+            <a href="{% url 'edit_blog' blog.id %}"><button class="btn btn-primary">Edit Post</button></a>
+        </div>
+        {% endif %}
         <!-- Video player 1422x800 -->
         <img src="{{blog.img.url}}" width="954" height="535" controls class="tm-mb-40">
             
