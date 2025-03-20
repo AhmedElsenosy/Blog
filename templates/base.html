@@ -100,8 +100,8 @@ https://templatemo.com/tm-553-xtra-blog
                         </button>                                
                     </form>
                     <div style="margin: 10px;">
-                        <a href="{% url 'profile' request.user.profile.id %}" class="tm-profile-link">
-                            <span class="tm-profile-name">{{request.user.profile.name|title}}</span>
+                        <a href="{% if request.user.profile.id %}{% url 'profile' request.user.profile.id %}{% else %}{% endif %}" class="tm-profile-link">
+                            <span class="tm-profile-name">{{request.user.profile.name}}</span>
                             <img src="{% if request.user.profile.img %}
                             {{request.user.profile.img.url}} 
                             {% else %}

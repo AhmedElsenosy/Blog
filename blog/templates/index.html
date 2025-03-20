@@ -36,29 +36,39 @@
         {% endfor %}
         
     </div>
-    <div class="row tm-row tm-mt-100 tm-mb-75">
-        <div class="tm-prev-next-wrapper">
-            <a href="#" class="mb-2 tm-btn tm-btn-primary tm-prev-next disabled tm-mr-20">Prev</a>
-            <a href="#" class="mb-2 tm-btn tm-btn-primary tm-prev-next">Next</a>
-        </div>
-        <div class="tm-paging-wrapper">
-            <span class="d-inline-block mr-3">Page</span>
-            <nav class="tm-paging-nav d-inline-block">
-                <ul>
-                    <li class="tm-paging-item active">
-                        <a href="#" class="mb-2 tm-btn tm-paging-link">1</a>
-                    </li>
-                    <li class="tm-paging-item">
-                        <a href="#" class="mb-2 tm-btn tm-paging-link">2</a>
-                    </li>
-                    <li class="tm-paging-item">
-                        <a href="#" class="mb-2 tm-btn tm-paging-link">3</a>
-                    </li>
-                    <li class="tm-paging-item">
-                        <a href="#" class="mb-2 tm-btn tm-paging-link">4</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>                
-    </div> 
+    {% if all_blogs.has_other_pages %}
+        <div class="row tm-row tm-mt-100 tm-mb-75">
+            <div class="tm-prev-next-wrapper">
+                {% if all_blogs.has_previous %}
+                    <a href="?page={{all_blogs.previous_page_number}}" class="mb-2 tm-btn tm-btn-primary tm-prev-next tm-mr-20">Prev</a>
+                {% else %}
+                    <a href="#" class="mb-2 tm-btn tm-btn-primary tm-prev-next disabled tm-mr-20">Prev</a>
+                {% endif %}
+
+                {% if all_blogs.has_next %}
+                    <a href="?page={{all_blogs.next_page_number}}" class="mb-2 tm-btn tm-btn-primary tm-prev-next">Next</a>
+                {% else %}
+                    <a href="#" class="mb-2 tm-btn tm-btn-primary disabled tm-prev-next">Next</a>
+                {% endif %}
+            </div>
+            <div class="tm-paging-wrapper">
+                <span class="d-inline-block mr-3">Page</span>
+                <nav class="tm-paging-nav d-inline-block">
+                    <ul>
+                        {% for p in all_blogs.paginator.page_range %}
+                            {% if all_blogs.number == p %}
+                                <li class="tm-paging-item active">
+                                    <a href="?page={{ p }}" class="mb-2 tm-btn tm-paging-link">{{ p }}</a>
+                                </li>
+                            {% else %}
+                                <li class="tm-paging-item">
+                                    <a href="?page={{ p }}" class="mb-2 tm-btn tm-paging-link">{{ p }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </nav>
+            </div>                
+        </div> 
+    {% endif %}
 {% endblock content %}

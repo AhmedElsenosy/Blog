@@ -4,13 +4,22 @@ from taggit.models import Tag
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import *
+from django.core.paginator import Paginator , EmptyPage , PageNotAnInteger
 
 # Create your views here.
 
 @login_required
 def home (request):
     all_blogs = Blog.objects.all().order_by('-id')
-    return render(request, 'index.html',{'all_blogs':all_blogs})
+    page = request.GET.get('page',1)
+    paginator = Paginator(all_blogs,4)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+    return render(request, 'index.html',{'all_blogs':posts})
 
 
 def detail (request,pk):
