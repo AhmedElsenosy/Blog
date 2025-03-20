@@ -93,12 +93,15 @@ https://templatemo.com/tm-553-xtra-blog
             <!-- Search form -->
             
                 <div class="col-12" style="display: flex; justify-content: space-between;">
-                    <form method="GET" class="form-inline tm-mb-80 tm-search-form">                
-                        <input class="form-control tm-search-input" name="query" type="text" placeholder="Search..." aria-label="Search">
-                        <button class="tm-search-button" type="submit">
-                            <i class="fas fa-search tm-search-icon" aria-hidden="true"></i>
-                        </button>                                
-                    </form>
+                    {% if request.path == '/home/' %}
+                        <form class="form-inline tm-mb-80 tm-search-form" action="{% url 'home' %}">                
+                            <input class="form-control tm-search-input" name="search" type="search" placeholder="Search..." aria-label="Search">
+                            <button class="tm-search-button" type="submit">
+                                <i class="fas fa-search tm-search-icon" aria-hidden="true"></i>
+                            </button>                                
+                        </form>
+                    {% endif %}
+                    
                     <div style="margin: 10px;">
                         <a href="{% if request.user.profile.id %}{% url 'profile' request.user.profile.id %}{% else %}{% endif %}" class="tm-profile-link">
                             <span class="tm-profile-name">{{request.user.profile.name}}</span>

@@ -5,12 +5,17 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import *
 from django.core.paginator import Paginator , EmptyPage , PageNotAnInteger
+from django.db.models import Q
 
 # Create your views here.
 
 @login_required
 def home (request):
-    all_blogs = Blog.objects.all().order_by('-id')
+    search = request.GET.get('search')
+    if search:
+        all_blogs = Blog.objects.filter(Q(title__icontains = search) & Q(content__icontains = search)).order_by('-id')
+    else:
+        all_blogs = Blog.objects.all().order_by('-id')
     page = request.GET.get('page',1)
     paginator = Paginator(all_blogs,4)
     try:
