@@ -33,3 +33,15 @@ class Comment (models.Model):
 
     def __str__ (self):
         return self.user.username
+
+
+class About (models.Model):
+    title = models.CharField(max_length=100)
+    content = models.TextField()
+    img = models.ImageField(upload_to='about/')
+    background = models.TextField()
+    team_work = models.TextField()
+    our_core_value = models.TextField()
+
+    def __str__(self):
+        return self.title

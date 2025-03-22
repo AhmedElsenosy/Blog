@@ -110,3 +110,9 @@ def Create_post (request):
         form = Create_blog()
 
     return render(request , 'create_post.html' , {'form':form})
+
+
+@login_required
+def about (request):
+    about_page = About.objects.all().first()
+    return render(request , 'about.html' , {'about':about_page})
