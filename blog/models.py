@@ -45,3 +45,18 @@ class About (models.Model):
 
     def __str__(self):
         return self.title
+
+
+class ContactInfo (models.Model):
+    address = models.TextField()
+    phone = models.CharField(max_length=20)
+    email = models.EmailField()
+    facebook = models.URLField()
+    linkedin = models.URLField()
+    github = models.URLField()
+
+class ContactUs (models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    message = models.TextField()
+    def __str__(self):
+        return f'message from {self.user.username}'

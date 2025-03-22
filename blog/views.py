@@ -116,3 +116,18 @@ def Create_post (request):
 def about (request):
     about_page = About.objects.all().first()
     return render(request , 'about.html' , {'about':about_page})
+
+@login_required
+def contact (request):
+    contact_info = ContactInfo.objects.all().first()
+    if request.POST:
+        form = Contact_us_form(request.POST)
+        if form.is_valid():
+            new = form.save(commit=False)
+            new.user = request.user
+            new.save()
+            messages.success(request , 'Message Sent Successfully...')
+            return redirect('home')
+    else:
+        form = Contact_us_form()
+    return render(request , 'contact.html' , {'contact':contact_info , 'form':form})

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- <div class="row tm-row tm-mb-45">
+    <div class="col-12">
+        <hr class="tm-hr-primary tm-mb-55">
+        <div class="gmap_canvas"> 
+            <iframe width="100%" height="477" id="gmap_canvas"
+                src="https://maps.google.com/maps?q=Av.+L%C3%BAcio+Costa,+Rio+de+Janeiro+-+RJ,+Brazil&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+        </div>
+    </div>                
+</div> -->
+<div class="row tm-row tm-mb-120">
+    <div class="col-12">
+        <h2 class="tm-color-primary tm-post-title tm-mb-60">Contact Us</h2>
+    </div>
+    <div class="col-lg-7 tm-contact-left">
+        <form method="POST" action="" class="mb-5 ml-auto mr-0 tm-contact-form"> 
+            {% csrf_token %}                       
+            <div class="form-group row mb-5">
+                <label for="message" class="col-sm-3 col-form-label text-right tm-color-primary">Message</label>
+                <div class="col-sm-9">
+                    {{form.message}}
+                </div>
+            </div>
+            <div class="form-group row text-right">
+                <div class="col-12">
+                    <button class="tm-btn tm-btn-primary tm-btn-small">Submit</button>                        
+                </div>                            
+            </div>                                
+        </form>
+    </div>
+    <div class="col-lg-5 tm-contact-right">
+        <address class="mb-4 tm-color-gray">
+            {{contact.address}}
+        </address>
+        <span class="d-block">
+            Tel:
+            <a href="tel:{{contact.phone}}" class="tm-color-gray">{{contact.phone}}</a>
+        </span>
+        <span class="mb-4 d-block">
+            Email:
+            <a href="mailto:{{contact.email}}" class="tm-color-gray">{{contact.email}}</a>
+        </span>
+        <ul class="tm-social-links">
+            <li class="mb-2">
+                <a href="{{contact.facebook}}" class="d-flex align-items-center justify-content-center">
+                    <i class="fab fa-facebook"></i>
+                </a>
+            </li>
+            <li class="mb-2">
+                <a href="{{contact.linkedin}}" class="d-flex align-items-center justify-content-center">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            </li>
+            <li class="mb-2">
+                <a href="{{contact.github}}" class="d-flex align-items-center justify-content-center">
+                    <i class="fab fa-github"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>      
+{% endblock content %}
