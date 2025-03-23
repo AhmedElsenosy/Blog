@@ -85,8 +85,8 @@ https://templatemo.com/tm-553-xtra-blog
     <div class="container-fluid">
         <main class="tm-main">
             {% for message in messages %}
-            <div class="alert alert-{{message.tags}} alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <div id="alert" class="alert alert-{{message.tags}} alert-dismissible">
+                <button type="button" style="margin: 7px; font-size: xx-large;" class="close" data-dismiss="alert">&times;</button>
                 <strong>{{message}}</strong>
             </div>
             {% endfor %}
@@ -129,5 +129,10 @@ https://templatemo.com/tm-553-xtra-blog
     </div>
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/templatemo-script.js' %}"></script>
+    <script>
+        setInterval(() => {
+            $('#alert').fadeOut();
+        }, 3000);
+    </script>
 </body>
 </html>
