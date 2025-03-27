@@ -24,14 +24,14 @@
                 </div>
                 <hr>
                 <div class="d-flex justify-content-between">
-                    <span>36 comments</span>
+                    <span>{{blog.comment_count.count}} comments</span>
                     <span>{{blog.author}}</span>
                 </div>
             </article>
         {% endfor %}
         
     </div>
-    <div class="row tm-row tm-mt-100 tm-mb-75">
+    <!-- <div class="row tm-row tm-mt-100 tm-mb-75">
         <div class="tm-prev-next-wrapper">
             <a href="#" class="mb-2 tm-btn tm-btn-primary tm-prev-next disabled tm-mr-20">Prev</a>
             <a href="#" class="mb-2 tm-btn tm-btn-primary tm-prev-next">Next</a>
@@ -55,5 +55,5 @@
                 </ul>
             </nav>
         </div>                
-    </div> 
+    </div>  -->
 {% endblock content %}

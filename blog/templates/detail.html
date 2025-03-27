@@ -77,7 +77,9 @@
                                 {% csrf_token %}
                                 <input type="hidden" name="delete" id="delete" value="{{comment.id}}">
                                 <input type="hidden" name="id" id="id" value="{{blog.id}}">
+                                {% if request.user == comment.user %}
                                 <button type="submit" class="tm-color-primary"><i class="fas fa-trash-alt" style="font-size: x-large; color: red;"></i></button>
+                                {% endif %}
                             </form>
                             <span class="tm-color-primary">&nbsp;{{comment.created_at|timesince}}</span>
                         </div>                                                 

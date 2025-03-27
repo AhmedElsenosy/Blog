@@ -9,7 +9,7 @@ from django.db.models import Q
 
 # Create your views here.
 
-@login_required
+# @login_required
 def home (request):
     search = request.GET.get('search')
     if search:
@@ -26,12 +26,13 @@ def home (request):
         posts = paginator.page(paginator.num_pages)
     return render(request, 'index.html',{'all_blogs':posts})
 
-
+@login_required
 def detail (request,pk):
     blog = Blog.objects.get(id = pk)
     comments = Comment.objects.filter(blog=blog , active = True)
     return render(request, 'detail.html' , {'blog' : blog , 'comments' : comments})
 
+@login_required
 def tags (request,tag_slug):
     all_blogs = Blog.objects.all().order_by('-id')
 
@@ -46,7 +47,7 @@ def tags (request,tag_slug):
 
     return render (request , 'tags.html' , context)
 
-
+@login_required
 def comment (request):
     if request.POST:
         pk = request.POST.get('id')
@@ -59,6 +60,8 @@ def comment (request):
 
         return redirect ('detail_blog' ,pk)
     
+@login_required
+    
 def delete_comment (request):
     if request.POST:
         pk = request.POST.get('delete')
@@ -67,7 +70,7 @@ def delete_comment (request):
         comment.delete()
         return redirect('detail_blog',blog_id)
     
-
+@login_required
 def edit_blog (request , pk):
     blog = Blog.objects.get(id = pk)
     if request.POST:
@@ -86,30 +89,30 @@ def edit_blog (request , pk):
         
     return render(request , 'edit_post.html' , {'form':form , 'blog':blog})
 
-
+@login_required
 def delete_blog (request , pk):
     blog = Blog.objects.get(id = pk).delete()
     messages.success(request , 'Deleted Successfully...')
     return redirect('home')
 
 @login_required
-def Create_post (request):
+def Create_post(request):
     if request.POST:
-        form = Create_blog(request.POST , request.FILES)
+        form = Create_blog(request.POST, request.FILES)
         if form.errors:
-            messages.warning(request , f'{form.errors}')
+            messages.warning(request, f'{form.errors}')
 
         if form.is_valid():
             new = form.save(commit=False)
             new.author = request.user
             new.save()
-            messages.success(request , 'Created Successfully...')
+            form.save_m2m()
+            messages.success(request, 'Created Successfully...')
             return redirect('home')
-        
     else:
         form = Create_blog()
 
-    return render(request , 'create_post.html' , {'form':form})
+    return render(request, 'create_post.html', {'form': form})
 
 
 @login_required

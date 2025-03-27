@@ -26,28 +26,36 @@ def register (request):
     return render(request , 'register.html' , {'form' : form})
 
 
-def login_page (request):
+def login_page(request):
     next = request.GET.get('next')
     if request.user.is_authenticated:
-        messages.warning(request , f'You are already logged in, welcome {request.user}')
+        messages.warning(request, f'You are already logged in, welcome {request.user}')
         return redirect('home')
+    
     if request.POST:
         form = LoginForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-
-            user = authenticate(request , username = username , password = password)
-
-            if user:
-                login(request , user)
-                messages.info(request , f'Login successfully! Welcome to our website {username}')
-                return redirect ('home')
             
+            user = authenticate(request, username=username, password=password)
+            
+            if user is not None:
+                login(request, user)
+                messages.info(request, f'Login successfully! Welcome to our website {username}')
+                if next:
+                    return redirect(next)
+                return redirect('home')
+            else:
+                # Add error message for invalid credentials
+                messages.error(request, 'Invalid username or password')
+        else:
+            # Add error message for form validation errors
+            messages.error(request, 'Please correct the errors below')
     else:
         form = LoginForm()
 
-    return render (request , 'login.html' , {'form' : form , 'next' : next})
+    return render(request, 'login.html', {'form': form, 'next': next})
     
 
 

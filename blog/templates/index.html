@@ -13,7 +13,7 @@
                 <hr class="tm-hr-primary">
                 <a href="{{blog.get_absolute_url}}" class="effect-lily tm-post-link tm-pt-60">
                     <div class="tm-post-link-inner">
-                        <img src="{{blog.img.url}}" alt="Image" class="img-fluid">                            
+                        <img src="{{blog.img.url}}" alt="Image" class="img-fluid w-100" style="height: 300px; object-fit: cover;">                            
                     </div>
                     {% if forloop.counter == 1 or forloop.counter == 2 %}
                     <span class="position-absolute tm-new-badge">New</span>
